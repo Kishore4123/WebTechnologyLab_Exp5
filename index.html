@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSN & SONS Travel Agency</title>
+    <style>
+        /* Base Styling */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f4f7f6;
+        }
+
+        /* Header & Navigation */
+        header { 
+            background: #003366; 
+            color: white; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-placeholder { 
+            width: 120px; 
+            height: 50px; 
+            background: #e0e0e0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #333; 
+            font-size: 0.8rem;
+            font-weight: bold; 
+            border-radius: 4px; 
+            border: 2px dashed #999;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Buttons */
+        button { 
+            background: #ff9900; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+            transition: background 0.3s;
+        }
+        button:hover { background: #cc7a00; }
+
+        /* Hero Section */
+        .hero { 
+            text-align: center; 
+            padding: 4rem 1rem; 
+            background: #e0f2fe; 
+            border-bottom: 2px solid #ccc;
+        }
+        
+        form { margin-top: 20px; }
+        input[type="text"] { 
+            padding: 10px; 
+            width: 250px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+
+        /* Destinations Grid */
+        .destinations { 
+            display: flex; 
+            gap: 2rem; 
+            padding: 3rem; 
+            justify-content: center; 
+            flex-wrap: wrap;
+        }
+        .card { 
+            background: white;
+            border: 1px solid #ddd; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            text-align: center; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DOM Elements: Header -->
+    <header>
+        <div class="brand">
+            <!-- Logo Placeholder -->
+            <img src="./LOGO.png" alt="VSN & SONS Logo" class="logo-placeholder" id="site-logo">
+            <h1>VSN & SONS Travel</h1>
+        </div>
+        <nav>
+            <button id="contact-btn">Contact Agent</button>
+        </nav>
+    </header>
+
+    <!-- DOM Elements: Hero & Form -->
+    <section class="hero">
+        <h2>Your Next Adventure Starts Here</h2>
+        <p>Book premium vacation packages across the globe.</p>
+        
+        <form id="search-form">
+            <input type="text" id="destination-input" placeholder="Enter a city or country..." required>
+            <button type="submit">Search Trips</button>
+        </form>
+    </section>
+
+    <!-- DOM Elements: Destination Cards -->
+    <section class="destinations" id="destination-list">
+        <div class="card" data-location="Maldives">
+            <h3>The Maldives</h3>
+            <p>Luxury Beach Resorts</p>
+            <button class="book-now">Explore</button>
+        </div>
+        <div class="card" data-location="Swiss Alps">
+            <h3>Swiss Alps</h3>
+            <p>Premium Ski Packages</p>
+            <button class="book-now">Explore</button>
+        </div>
+    </section>
+
+    <script>
+        // --- 1. Selecting DOM Elements ---
+        const logo = document.getElementById('site-logo');
+        const contactBtn = document.getElementById('contact-btn');
+        const searchForm = document.getElementById('search-form');
+        const destinationInput = document.getElementById('destination-input');
+        const exploreButtons = document.querySelectorAll('.book-now');
+
+        // --- 2. Defining DOM Events ---
+
+        // Event A: Mouseenter/Mouseleave on the Logo Placeholder
+        logo.addEventListener('mouseenter', () => {
+            logo.style.opacity = '0.6';
+        });
+        logo.addEventListener('mouseleave', () => {
+            logo.style.opacity = '1';
+        });
+
+        // Event B: Click event for the Contact button
+        contactBtn.addEventListener('click', () => {
+            alert('Welcome to VSN & SONS! Call us at 1-800-VSN-TRVL or email agents@vsnsons.com');
+        });
+
+        // Event C: Submit event for the Search Form
+        searchForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Stops the page from refreshing
+            const location = destinationInput.value;
+            alert(`Querying our databases for the best travel deals to: ${location}`);
+            destinationInput.value = ''; // Clears the input field after searching
+        });
+
+        // Event D: Click events attached to multiple elements (NodeList)
+        exploreButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                // Traverse the DOM to find the parent card's data attribute
+                const card = event.target.closest('.card');
+                const locationName = card.getAttribute('data-location');
+                alert(`Checking availability for the ${locationName} package...`);
+            });
+        });
+    </script>
+
+</body>
+</html>
